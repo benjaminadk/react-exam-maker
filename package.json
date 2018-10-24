@@ -1,0 +1,30 @@
+{
+  "name": "exam-maker",
+  "version": "1.0.0",
+  "description": "creates exams for Exam Simulator",
+  "main": "server.js",
+  "scripts": {
+    "build": "npm run build --prefix client",
+    "dev:server": "nodemon server.js",
+    "dev:client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "benjaminadk",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^4.0.1",
+    "nodemon": "^1.18.4"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.1.0",
+    "express": "^4.16.3",
+    "graphql": "^14.0.2",
+    "jsonwebtoken": "^8.3.0",
+    "merge-graphql-schemas": "^1.5.7",
+    "mongoose": "^5.3.2",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0"
+  }
+}
