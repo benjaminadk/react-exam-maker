@@ -1,0 +1,47 @@
+.ExamList {
+  padding: 10px;
+
+  .divider {
+    margin-bottom: 20px;
+  }
+
+  .cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .card {
+      width: 300px;
+      margin-right: 50px;
+      margin-bottom: 50px;
+      margin-left: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .cover {
+        height: 250px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        .cover-img {
+          width: 150px;
+        }
+
+        .cover-filler {
+          width: 150px;
+          height: 150px;
+        }
+      }
+
+      .actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  }
+}

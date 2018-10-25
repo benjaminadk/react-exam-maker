@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
   container: {
-    height: '100%',
+    height: '75%',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -16,8 +16,9 @@ const styles = theme => ({
 
 const Loading = ({ classes }) => (
   <div className={classes.container}>
-    <CircularProgress size={80} thickness={2.0} color="secondary" />
-    <Typography variant="body2">Loading...</Typography>
+    <CircularProgress size={100} thickness={3.0} color="primary" />
+    <br />
+    <Typography variant="h6">Loading...</Typography>
   </div>
 )
 

@@ -99,7 +99,7 @@ class MainNav extends React.Component {
   gotoSavedExams = () => this.props.history.push('/exams')
 
   render() {
-    const { loggedIn, classes } = this.props
+    const { loggedIn, handleLogout, classes } = this.props
 
     return (
       <div className={classes.root}>
@@ -120,7 +120,7 @@ class MainNav extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <TopBar loggedIn={loggedIn} />
+            <TopBar loggedIn={loggedIn} handleLogout={handleLogout} />
           </Toolbar>
         </AppBar>
         <Drawer

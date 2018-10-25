@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { compose, graphql } from 'react-apollo'
-import { CREATE_EXAM } from '../../apollo/mutations/createExam'
+import { SAVE_EXAM } from '../../apollo/mutations/saveExam'
+import { MY_EXAMS } from '../../apollo/queries/myExams'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import labelHelper from '../../utils/labelHelper'
@@ -13,12 +14,14 @@ import RightExplanation from './RightExplanation'
 import RightCover from './RightCover'
 import RightJSON from './RightJSON'
 import Confirm from '../App/Confirm'
+import Notification from '../App/Notification'
 
 class ExamMaker extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      examId: null,
       mode: 0,
       title: '',
       code: '',
@@ -27,23 +30,53 @@ class ExamMaker extends Component {
       cover: [],
       index: null,
       test: [],
-      confirmRQ: false
+      confirmRQ: false,
+      notifySE: false,
+      variantSE: '',
+      messageSE: ''
     }
 
     this.questionTile = React.createRef()
   }
 
+  componentDidMount() {
+    const { exam } = this.props
+    if (exam) {
+      this.setState(
+        {
+          examId: exam.id,
+          title: exam.title,
+          code: exam.code,
+          pass: exam.pass,
+          time: exam.time,
+          cover: exam.cover,
+          test: exam.test,
+          index: exam.test.length ? 0 : null,
+          notifySE: true,
+          variantSE: 'success',
+          messageSE: 'Exam Loaded Successfully'
+        },
+        () => this.closeNotification()
+      )
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.unloadExam()
+  }
+
   setMode = mode => this.setState({ mode })
 
-  createExam = async () => {
-    const { title, code, pass, time, cover, test } = this.state
+  saveExam = async () => {
+    const { examId, title, code, pass, time, cover, test } = this.state
     const {
-      user: { username }
+      user: { id }
     } = this.props
-    let response = await this.props.createExam({
+    let response = await this.props.saveExam({
       variables: {
         input: {
-          author: username,
+          examId,
+          author: id,
           title,
           code,
           pass: parseInt(pass, 10),
@@ -51,12 +84,19 @@ class ExamMaker extends Component {
           cover,
           test
         }
-      }
+      },
+      refetchQueries: [{ query: MY_EXAMS }]
     })
-    let { success, message, exam } = response.data.createExam
-    if (success) {
-      // exam saved do something
-    }
+    let { success, message, exam } = response.data.saveExam
+    this.setState(
+      {
+        examId: exam.id,
+        notifySE: true,
+        variantSE: success ? 'success' : 'error',
+        messageSE: message
+      },
+      () => this.closeNotification()
+    )
   }
 
   downloadExam = () => {
@@ -77,7 +117,7 @@ class ExamMaker extends Component {
       title
         .toLowerCase()
         .trim()
-        .replace(' ', '-') + '.json'
+        .replace(/\s/g, '-') + '.json'
     let str = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(exam))}`
     let node = document.createElement('a')
     node.setAttribute('href', str)
@@ -90,7 +130,7 @@ class ExamMaker extends Component {
   addQuestion = () => {
     let { test } = this.state
     let item = {
-      variant: 'none',
+      variant: 0,
       question: [],
       choices: [],
       answer: [],
@@ -115,7 +155,7 @@ class ExamMaker extends Component {
     let newTest = test.slice(0)
     newTest.splice(index, 1)
     let newIndex = newTest.length > 0 ? index - 1 : null
-    this.setState({ test: newTest, index: newIndex })
+    this.setState({ test: newTest, index: newIndex, confirmRQ: false })
   }
 
   addNode = node => {
@@ -214,8 +254,11 @@ class ExamMaker extends Component {
 
   closeConfirmRQ = () => this.setState({ confirmRQ: false })
 
+  closeNotification = () => this.setState({ notifySE: false })
+
   render() {
-    const { mode, title, code, pass, time, cover, test, index, confirmRQ } = this.state
+    const { mode, title, code, pass, time, cover, test, index } = this.state
+    const { confirmRQ, notifySE, variantSE, messageSE } = this.state
     return [
       <div key="exam-maker" className="ExamMaker">
         <LeftColumn
@@ -227,7 +270,7 @@ class ExamMaker extends Component {
           time={time}
           onChange={this.onChange}
           setMode={this.setMode}
-          createExam={this.createExam}
+          saveExam={this.saveExam}
           downloadExam={this.downloadExam}
         />
         <CenterColumn
@@ -317,9 +360,10 @@ class ExamMaker extends Component {
         detail="Are you sure you want to permenantly remove selected question?"
         onClose={this.closeConfirmRQ}
         onOkay={this.removeQuestion}
-      />
+      />,
+      <Notification key="save-exam" open={notifySE} variant={variantSE} message={messageSE} />
     ]
   }
 }
 
-export default compose(graphql(CREATE_EXAM, { name: 'createExam' }))(ExamMaker)
+export default compose(graphql(SAVE_EXAM, { name: 'saveExam' }))(ExamMaker)

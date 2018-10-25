@@ -12,7 +12,8 @@ import Home from './components/Home/Home'
 class App extends Component {
   state = {
     loggedIn: false,
-    user: null
+    user: null,
+    exam: null
   }
 
   componentWillMount() {
@@ -20,24 +21,39 @@ class App extends Component {
   }
 
   handleGoogleLogin = user => {
-    Auth.authenticate()
-    this.setState({ loggedIn: true, user })
+    if (user) {
+      Auth.authenticate()
+      this.setState({ loggedIn: true, user })
+    }
   }
 
   handleAutoLogin = async () => {
     const token = localStorage.getItem('TOKEN')
     if (!token) return
     let response = await this.props.autoLogin()
-    const { success, message, user } = response.data.autoLogin
+    const { success, user } = response.data.autoLogin
     if (success) Auth.authenticate()
-    this.setState({ user, loggedIn: success })
+    this.setState({
+      user,
+      loggedIn: success
+    })
   }
 
+  handleLogout = () => {
+    Auth.logout()
+    localStorage.removeItem('TOKEN')
+    this.setState({ loggedIn: false })
+  }
+
+  loadExam = exam => this.setState({ exam })
+
+  unloadExam = () => this.setState({ exam: null })
+
   render() {
-    const { user, loggedIn } = this.state
+    const { user, loggedIn, exam } = this.state
     return (
-      <BrowserRouter>
-        <MainNav loggedIn={loggedIn}>
+      <BrowserRouter key="main-app">
+        <MainNav loggedIn={loggedIn} handleLogout={this.handleLogout}>
           <Switch>
             <Route exact path="/" component={Home} />
             <PropsRoute
@@ -45,8 +61,14 @@ class App extends Component {
               component={UserLanding}
               handleGoogleLogin={this.handleGoogleLogin}
             />
-            <PropsRoute path="/create" component={ExamMaker} user={user} />
-            <PropsRoute path="/exams" component={ExamList} user={user} />
+            <PropsRoute
+              path="/create"
+              component={ExamMaker}
+              user={user}
+              exam={exam}
+              unloadExam={this.unloadExam}
+            />
+            <PropsRoute path="/exams" component={ExamList} user={user} loadExam={this.loadExam} />
           </Switch>
         </MainNav>
       </BrowserRouter>

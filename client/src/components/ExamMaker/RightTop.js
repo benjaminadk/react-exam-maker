@@ -42,7 +42,6 @@ function RightTop({ index, test, onTypeChange, classes }) {
             }
           }}
         >
-          <MenuItem value="none">None</MenuItem>
           {QUESTION_TYPES.map((t, i) => (
             <MenuItem key={t.text} value={t.value}>
               {t.text}

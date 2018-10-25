@@ -1,10 +1,13 @@
 import gql from 'graphql-tag'
 
-export const CREATE_EXAM = gql`
+export const SAVE_EXAM = gql`
   mutation($input: ExamInput) {
-    createExam(input: $input) {
+    saveExam(input: $input) {
       success
       message
+      exam {
+        id
+      }
     }
   }
 `

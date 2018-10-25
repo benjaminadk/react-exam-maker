@@ -8,13 +8,13 @@ module.exports = {
       if (user) {
         return {
           success: true,
-          message: '',
+          message: `${user.username} Logged In`,
           user
         }
       } else {
         return {
           success: false,
-          message: 'invalid auth token',
+          message: 'Invalid Authorization Token',
           user: null
         }
       }

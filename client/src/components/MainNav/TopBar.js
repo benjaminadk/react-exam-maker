@@ -2,7 +2,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
-function TopBar({ loggedIn }) {
+function TopBar({ loggedIn, handleLogout }) {
   return (
     <React.Fragment>
       <Typography variant="h6" color="inherit" noWrap>
@@ -10,7 +10,9 @@ function TopBar({ loggedIn }) {
       </Typography>
       <div style={{ flexGrow: 1 }} />
       {loggedIn ? (
-        <Button color="inherit">Logout</Button>
+        <Button color="inherit" onClick={handleLogout}>
+          Logout
+        </Button>
       ) : (
         <Button href="/api/google" color="inherit">
           Login

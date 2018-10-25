@@ -41,6 +41,7 @@ module.exports = gql`
   }
 
   input ExamInput {
+    examId: ID
     author: String
     title: String
     code: String
@@ -87,9 +88,11 @@ module.exports = gql`
   type Query {
     allExams: [Exam]
     myExams: [Exam]
+    examById(examId: ID): Exam
   }
 
   type Mutation {
-    createExam(input: ExamInput): ExamPayload
+    saveExam(input: ExamInput): ExamPayload
+    deleteExam(examId: ID): ExamPayload
   }
 `
