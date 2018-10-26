@@ -15,6 +15,7 @@ import DeleteIcon from '@material-ui/icons/DeleteSharp'
 import Loading from '../App/Loading'
 import Confirm from '../App/Confirm'
 import Notification from '../App/Notification'
+import removeTypename from '../../utils/removeTypename'
 
 const styles = theme => ({
   caption: {
@@ -43,7 +44,7 @@ class ExamList extends Component {
   }
 
   editExam = exam => {
-    this.props.loadExam(exam)
+    this.props.loadExam(removeTypename(exam))
     this.props.history.push('/create')
   }
 

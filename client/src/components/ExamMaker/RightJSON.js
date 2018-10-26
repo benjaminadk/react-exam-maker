@@ -16,16 +16,16 @@ class RightJSON extends Component {
 
   onEdit = e => {
     console.log(e)
-    return false
+    return this.props.updateJSON(e.name, e.namespace, e.new_value)
   }
 
   onAdd = e => {
-    console.log(e)
     if (e.name === 'test') {
-      this.props.addQuestion()
-      return true
+      return this.props.addQuestion()
+    } else if (['cover', 'question', 'choices', 'explanation'].indexOf(e.name) !== -1) {
+      return this.props.addNode(e.name)
     } else {
-      return true
+      return false
     }
   }
 
@@ -37,6 +37,8 @@ class RightJSON extends Component {
         style={style}
         displayDataTypes={false}
         shouldCollapse={this.shouldCollapse}
+        onEdit={this.onEdit}
+        onAdd={this.onAdd}
       />
     )
   }

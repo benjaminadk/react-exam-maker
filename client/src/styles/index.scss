@@ -14,6 +14,46 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+// Home Component
+.Home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    height: 80vh;
+  }
+}
+
+// UserLanding Component
+.UserLanding {
+  padding: 10px;
+}
+
+.logo {
+  height: 40px;
+  width: 40px;
+  background-image: url('https://s3.amazonaws.com/electron-exam/general/icon.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-right: 20px;
+}
+
+.download-icon {
+  margin-left: 20px;
+}
+
+// MainNav Component
+.avatar {
+  height: 50px;
+  width: 50px;
+  margin-right: 20px;
+  border: 1px solid white;
+  background-color: lightgrey;
+}
+
+// scrollbar customization
 ::-webkit-scrollbar {
   width: 10px;
 }

@@ -98,8 +98,10 @@ class MainNav extends React.Component {
 
   gotoSavedExams = () => this.props.history.push('/exams')
 
+  gotoUserLanding = userId => this.props.history.push(`/user/${userId}`)
+
   render() {
-    const { loggedIn, handleLogout, classes } = this.props
+    const { loggedIn, user, handleLogout, classes } = this.props
 
     return (
       <div className={classes.root}>
@@ -120,7 +122,7 @@ class MainNav extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <TopBar loggedIn={loggedIn} handleLogout={handleLogout} />
+            <TopBar loggedIn={loggedIn} user={user} handleLogout={handleLogout} />
           </Toolbar>
         </AppBar>
         <Drawer
@@ -137,9 +139,12 @@ class MainNav extends React.Component {
           </div>
           <Divider />
           <MenuLeft
+            loggedIn={loggedIn}
+            user={user}
             gotoHome={this.gotoHome}
             gotoExamMaker={this.gotoExamMaker}
             gotoSavedExams={this.gotoSavedExams}
+            gotoUserLanding={this.gotoUserLanding}
           />
         </Drawer>
         <main className={classes.content}>

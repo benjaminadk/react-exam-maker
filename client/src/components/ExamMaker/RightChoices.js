@@ -57,6 +57,7 @@ function RightChoices({
                   value="poop"
                   icon={<CheckboxOutlineIcon />}
                   checkedIcon={<CheckboxIcon />}
+                  checked={test[index].answer[i]}
                   onChange={(e, checked) => onAnswerChange(e, checked, i)}
                 />
                 <TextField

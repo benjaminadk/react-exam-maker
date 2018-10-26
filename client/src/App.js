@@ -53,7 +53,7 @@ class App extends Component {
     const { user, loggedIn, exam } = this.state
     return (
       <BrowserRouter key="main-app">
-        <MainNav loggedIn={loggedIn} handleLogout={this.handleLogout}>
+        <MainNav loggedIn={loggedIn} user={user} handleLogout={this.handleLogout}>
           <Switch>
             <Route exact path="/" component={Home} />
             <PropsRoute

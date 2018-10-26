@@ -7,10 +7,19 @@ import ListItemText from '@material-ui/core/ListItemText'
 import HomeIcon from '@material-ui/icons/HomeSharp'
 import CreateIcon from '@material-ui/icons/CreateSharp'
 import ExamIcon from '@material-ui/icons/SchoolSharp'
+import UserIcon from '@material-ui/icons/PersonSharp'
 
 const styles = theme => ({})
 
-function MenuLeft({ gotoHome, gotoExamMaker, gotoSavedExams, classes }) {
+function MenuLeft({
+  loggedIn,
+  user,
+  gotoHome,
+  gotoExamMaker,
+  gotoSavedExams,
+  gotoUserLanding,
+  classes
+}) {
   const list = [
     { text: 'Home', icon: <HomeIcon />, click: gotoHome },
     { text: 'Create Exam', icon: <CreateIcon />, click: gotoExamMaker },
@@ -24,6 +33,14 @@ function MenuLeft({ gotoHome, gotoExamMaker, gotoSavedExams, classes }) {
           <ListItemText primary={l.text} />
         </ListItem>
       ))}
+      {loggedIn && (
+        <ListItem button onClick={() => gotoUserLanding(user.id)}>
+          <ListItemIcon>
+            <UserIcon />
+          </ListItemIcon>
+          <ListItemText primary="Account" />
+        </ListItem>
+      )}
     </List>
   )
 }

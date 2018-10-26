@@ -250,6 +250,33 @@ class ExamMaker extends Component {
     this.setState({ test })
   }
 
+  updateJSON = (n, ns, v) => {
+    const { test, cover } = this.state
+    let l = ns.length
+    if (l === 0) {
+      return this.setState({ [n]: v })
+    } else if (l === 2) {
+      let i = parseInt(ns[1], 10)
+      if (ns[0] === 'cover') {
+        cover[i][n] = n === 'variant' ? parseInt(v, 10) : v
+        this.setState({ cover })
+      } else if (ns[0] === 'test') {
+        test[i][n] = n === 'variant' ? parseInt(v, 10) : v
+        this.setState({ test })
+      }
+    } else if (l === 3) {
+      let j = parseInt(ns[1], 10)
+      let k = parseInt(n, 10)
+      test[j].answer[k] = Boolean(v)
+      this.setState({ test })
+    } else if (l === 4) {
+      let l = parseInt(ns[1], 10)
+      let m = parseInt(ns[3], 10)
+      test[l][ns[2]][m][n] = n === 'variant' ? parseInt(v, 10) : v
+      this.setState({ test })
+    }
+  }
+
   openConfirmRQ = () => this.setState({ confirmRQ: true })
 
   closeConfirmRQ = () => this.setState({ confirmRQ: false })
@@ -338,6 +365,8 @@ class ExamMaker extends Component {
               <Divider className="divider" />
               <RightJSON
                 addQuestion={this.addQuestion}
+                updateJSON={this.updateJSON}
+                addNode={this.addNode}
                 exam={{
                   title,
                   code,
