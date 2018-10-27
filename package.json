@@ -8,11 +8,16 @@
     "dev:server": "nodemon server.js",
     "dev:client": "npm run start --prefix client",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "keywords": [],
   "author": "benjaminadk",
   "license": "ISC",
+  "engines": {
+    "node": "10.8.0",
+    "npm": "6.1.0"
+  },
   "devDependencies": {
     "concurrently": "^4.0.1",
     "nodemon": "^1.18.4"

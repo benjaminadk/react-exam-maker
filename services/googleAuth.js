@@ -71,7 +71,7 @@ const googleScope = passport.authenticate('google', {
 const googleCallback = passport.authenticate('google', {
   failureRedirect:
     process.env.NODE_ENV === 'production'
-      ? `${key.PROD_URL}/failure/`
+      ? `${keys.PROD_URL}/failure/`
       : `http://localhost:${keys.PORT_FRONTEND}/failure/`,
   session: false
 })

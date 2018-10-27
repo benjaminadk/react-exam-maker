@@ -29,6 +29,11 @@ class RightJSON extends Component {
     }
   }
 
+  onDelete = e => {
+    console.log(e)
+    return false
+  }
+
   render() {
     const { exam } = this.props
     return (
@@ -39,6 +44,25 @@ class RightJSON extends Component {
         shouldCollapse={this.shouldCollapse}
         onEdit={this.onEdit}
         onAdd={this.onAdd}
+        onDelete={this.onDelete}
+        // theme={{
+        //   base00: 'white',
+        //   base01: '#ddd',
+        //   base02: '#ddd',
+        //   base03: '#444',
+        //   base04: 'rgb(224, 31, 144)',
+        //   base05: '#444',
+        //   base06: '#444',
+        //   base07: '#444',
+        //   base08: '#444',
+        //   base09: 'rgb(36, 132, 235)',
+        //   base0A: 'rgb(36, 132, 235)',
+        //   base0B: 'rgb(36, 132, 235)',
+        //   base0C: 'rgb(36, 132, 235)',
+        //   base0D: 'rgb(36, 132, 235)',
+        //   base0E: 'rgb(36, 132, 235)',
+        //   base0F: 'rgb(36, 132, 235)'
+        // }}
       />
     )
   }

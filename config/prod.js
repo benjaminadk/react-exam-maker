@@ -1,6 +1,6 @@
 module.exports = {
-  PORT_FRONTEND: process.env.PORT_FRONTEND,
-  PORT_BACKEND: process.env.PORT_BACKEND,
+  PORT_FRONTEND: process.env.PORT,
+  PORT_BACKEND: process.env.PORT,
   PROD_URL: process.env.PROD_URL,
   MLAB_URI: process.env.MLAB_URI,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
