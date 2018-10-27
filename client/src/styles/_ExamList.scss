@@ -43,5 +43,16 @@
         justify-content: space-around;
       }
     }
+
+    .no-exams {
+      width: 33%;
+      height: 25vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid;
+      background-color: rgb(213, 231, 251);
+      margin-top: 10vh;
+    }
   }
 }

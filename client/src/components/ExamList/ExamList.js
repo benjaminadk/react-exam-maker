@@ -109,67 +109,78 @@ class ExamList extends Component {
         <Typography variant="overline">Saved Exams</Typography>
         <Divider className="divider" />
         <div className="cards">
-          {myExams.map((e, i) => (
-            <Card key={`exam-${i}`} square elevation={1} className="card">
-              <CardContent>
-                <div className="cover">
-                  {e.cover.length
-                    ? e.cover.map((c, j) => {
-                        if (c.variant === 0)
-                          return <img key={c.text} src={c.text} alt="cover" className="cover-img" />
-                        else if (c.variant === 1)
-                          return (
-                            <Typography
-                              key={c.text}
-                              variant="caption"
-                              classes={{ caption: classes.caption }}
-                              noWrap
-                            >
-                              {c.text}
-                            </Typography>
-                          )
-                        else
-                          return (
-                            <Typography key={c.text} variant="subtitle2">
-                              {c.text}
-                            </Typography>
-                          )
-                      })
-                    : [
-                        <Typography key={`title-${i}`} variant="subtitle2">
-                          {e.title}
-                        </Typography>,
-                        <img
-                          key={`cover-${i}`}
-                          src="https://s3.amazonaws.com/electron-exam/general/icon.png"
-                          alt="default"
-                          className="cover-filler"
-                        />,
-                        <Typography key={`code-${i}`} variant="caption">
-                          Create cover for cooler display
-                        </Typography>
-                      ]}
-                </div>
-              </CardContent>
-              <CardActions className="actions">
-                <IconButton onClick={() => this.editExam(e)} classes={{ root: classes.iconButton }}>
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => this.downloadExam(e)}
-                  classes={{ root: classes.iconButton }}
-                >
-                  <DownloadIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => this.openConfirmDE(e.id)}
-                  classes={{ root: classes.iconButton }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </CardActions>
-            </Card>
-          ))}
+          {myExams ? (
+            myExams.map((e, i) => (
+              <Card key={`exam-${i}`} square elevation={1} className="card">
+                <CardContent>
+                  <div className="cover">
+                    {e.cover.length
+                      ? e.cover.map((c, j) => {
+                          if (c.variant === 0)
+                            return (
+                              <img key={c.text} src={c.text} alt="cover" className="cover-img" />
+                            )
+                          else if (c.variant === 1)
+                            return (
+                              <Typography
+                                key={c.text}
+                                variant="caption"
+                                classes={{ caption: classes.caption }}
+                                noWrap
+                              >
+                                {c.text}
+                              </Typography>
+                            )
+                          else
+                            return (
+                              <Typography key={c.text} variant="subtitle2">
+                                {c.text}
+                              </Typography>
+                            )
+                        })
+                      : [
+                          <Typography key={`title-${i}`} variant="subtitle2">
+                            {e.title}
+                          </Typography>,
+                          <img
+                            key={`cover-${i}`}
+                            src="https://s3.amazonaws.com/electron-exam/general/icon.png"
+                            alt="default"
+                            className="cover-filler"
+                          />,
+                          <Typography key={`code-${i}`} variant="caption">
+                            Create cover for cooler display
+                          </Typography>
+                        ]}
+                  </div>
+                </CardContent>
+                <CardActions className="actions">
+                  <IconButton
+                    onClick={() => this.editExam(e)}
+                    classes={{ root: classes.iconButton }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => this.downloadExam(e)}
+                    classes={{ root: classes.iconButton }}
+                  >
+                    <DownloadIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => this.openConfirmDE(e.id)}
+                    classes={{ root: classes.iconButton }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </CardActions>
+              </Card>
+            ))
+          ) : (
+            <div className="no-exams">
+              <Typography variant="h6">No Saved Exams</Typography>
+            </div>
+          )}
         </div>
       </div>,
       <Confirm
