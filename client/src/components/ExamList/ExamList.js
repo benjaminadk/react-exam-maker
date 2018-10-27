@@ -12,10 +12,12 @@ import Divider from '@material-ui/core/Divider'
 import EditIcon from '@material-ui/icons/EditSharp'
 import DownloadIcon from '@material-ui/icons/GetAppSharp'
 import DeleteIcon from '@material-ui/icons/DeleteSharp'
+import LinkIcon from '@material-ui/icons/LinkSharp'
 import Loading from '../App/Loading'
 import Confirm from '../App/Confirm'
 import Notification from '../App/Notification'
 import removeTypename from '../../utils/removeTypename'
+import copyToClipboard from '../../utils/copyToClipboard'
 
 const styles = theme => ({
   caption: {
@@ -71,6 +73,11 @@ class ExamList extends Component {
     document.body.appendChild(node)
     node.click()
     node.remove()
+  }
+
+  copyLink = examId => {
+    let link = `https://exam-maker.herokuapp.com/api/json?examId=${examId}`
+    copyToClipboard(link)
   }
 
   deleteExam = async () => {
@@ -166,6 +173,12 @@ class ExamList extends Component {
                     classes={{ root: classes.iconButton }}
                   >
                     <DownloadIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => this.copyLink(e.id)}
+                    classes={{ root: classes.iconButton }}
+                  >
+                    <LinkIcon />
                   </IconButton>
                   <IconButton
                     onClick={() => this.openConfirmDE(e.id)}

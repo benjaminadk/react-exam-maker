@@ -36,6 +36,8 @@ app.use(passport.initialize())
 app.get('/api/google', googleScope)
 app.get('/api/google/callback', googleCallback, googleRedirect)
 
+app.get('/api/json', require('./routes/getExam'))
+
 server.applyMiddleware({ app, path: '/graphql' })
 
 if (process.env.NODE_ENV === 'production') {
