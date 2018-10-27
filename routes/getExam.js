@@ -16,5 +16,5 @@ module.exports = async (req, res) => {
   let exam = await models.Exam.findById(req.query.examId)
   let str = JSON.stringify(exam)
   let payload = removeTypename(JSON.parse(str))
-  res.send(JSON.stringify(payload))
+  res.send(payload)
 }
