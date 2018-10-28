@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { Auth, PropsRoute } from './utils/routing'
+import { Auth, PropsRoute, PrivateRoute } from './utils/routing'
 import { graphql, compose } from 'react-apollo'
 import { AUTOLOGIN } from './apollo/mutations/autoLogin'
 import MainNav from './components/MainNav/MainNav'
@@ -61,14 +61,14 @@ class App extends Component {
               component={UserLanding}
               handleGoogleLogin={this.handleGoogleLogin}
             />
-            <PropsRoute
+            <PrivateRoute
               path="/create"
               component={ExamMaker}
               user={user}
               exam={exam}
               unloadExam={this.unloadExam}
             />
-            <PropsRoute path="/exams" component={ExamList} user={user} loadExam={this.loadExam} />
+            <PrivateRoute path="/exams" component={ExamList} user={user} loadExam={this.loadExam} />
           </Switch>
         </MainNav>
       </BrowserRouter>

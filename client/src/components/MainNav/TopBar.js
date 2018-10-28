@@ -17,7 +17,7 @@ function TopBar({ loggedIn, user, handleLogout, classes }) {
   return (
     <React.Fragment>
       <Typography variant="h5" color="inherit" noWrap>
-        Exam Maker
+        Exam Maker *beta
       </Typography>
       <div style={{ flexGrow: 1 }} />
       {loggedIn && <Avatar src={user.avatar} alt="" className="avatar" />}

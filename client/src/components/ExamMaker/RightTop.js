@@ -18,8 +18,8 @@ const styles = theme => ({
 
 const QUESTION_TYPES = [
   { value: 0, text: 'Multiple Choice' },
-  { value: 1, text: 'Choose Two or More' },
-  { value: 2, text: 'Fill in the Blank' }
+  { value: 1, text: 'Choose Two or More' }
+  //{ value: 2, text: 'Fill in the Blank' }
 ]
 
 function RightTop({ index, test, onTypeChange, classes }) {

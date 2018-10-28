@@ -132,6 +132,7 @@ class ExamList extends Component {
                               <Typography
                                 key={c.text}
                                 variant="caption"
+                                align="center"
                                 classes={{ caption: classes.caption }}
                                 noWrap
                               >
