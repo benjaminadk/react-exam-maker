@@ -12,7 +12,7 @@ const googleOauth = new GoogleStrategy(
     clientSecret: keys.GOOGLE_CLIENT_SECRET,
     callbackURL:
       process.env.NODE_ENV === 'production'
-        ? `${keys.PROD_URL}/api/google/callback`
+        ? `https://exam-maker.herokuapp.com/api/google/callback`
         : `http://localhost:${keys.PORT_BACKEND}/api/google/callback`,
     passRequestToCallback: true
   },
@@ -71,7 +71,7 @@ const googleScope = passport.authenticate('google', {
 const googleCallback = passport.authenticate('google', {
   failureRedirect:
     process.env.NODE_ENV === 'production'
-      ? `${keys.PROD_URL}/failure/`
+      ? `https://exam-maker.herokuapp.com/failure/`
       : `http://localhost:${keys.PORT_FRONTEND}/failure/`,
   session: false
 })
@@ -79,7 +79,7 @@ const googleCallback = passport.authenticate('google', {
 const googleRedirect = (req, res) => {
   res.redirect(
     process.env.NODE_ENV === 'production'
-      ? `${keys.PROD_URL}/user/${userId}`
+      ? `https://exam-maker.herokuapp.com/user/${userId}`
       : `http://localhost:${keys.PORT_FRONTEND}/user/${userId}`
   )
 }
