@@ -4,11 +4,11 @@
   "description": "creates exams for Exam Simulator",
   "main": "server.js",
   "scripts": {
-    "build": "npm run build --prefix client",
     "dev:server": "nodemon server.js",
     "dev:client": "npm run start --prefix client",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "start": "node server.js",
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "keywords": [],
