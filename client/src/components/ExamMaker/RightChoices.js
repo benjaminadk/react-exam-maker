@@ -62,7 +62,7 @@ function RightChoices({
                 />
                 <TextField
                   variant="outlined"
-                  value={c.text}
+                  value={test[index].variant === 2 ? test[index].answer[i] : c.text}
                   onChange={e => onChoiceChange(e, i)}
                   label="Text"
                   className="textfield"

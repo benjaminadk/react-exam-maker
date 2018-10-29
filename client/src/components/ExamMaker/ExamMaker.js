@@ -199,6 +199,8 @@ class ExamMaker extends Component {
   onTypeChange = e => {
     const { test, index } = this.state
     test[index].variant = e.target.value
+    test[index].choices = []
+    test[index].answer = []
     this.setState({ test })
   }
 
@@ -228,12 +230,17 @@ class ExamMaker extends Component {
 
   onChoiceChange = (e, i) => {
     const { test, index } = this.state
-    test[index].choices[i].text = e.target.value
+    if (test[index].variant === 2) {
+      test[index].answer[i] = e.target.value
+    } else {
+      test[index].choices[i].text = e.target.value
+    }
     this.setState({ test })
   }
 
   onAnswerChange = (e, checked, i) => {
     const { test, index } = this.state
+    if (test[index].variant === 2) return
     test[index].answer[i] = checked
     this.setState({ test })
   }
