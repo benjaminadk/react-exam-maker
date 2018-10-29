@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { graphql, compose } from 'react-apollo'
 import { withStyles } from '@material-ui/core/styles'
 import { USER_BY_ID } from '../../apollo/queries/userById'
-import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import DownloadIcon from '@material-ui/icons/GetAppSharp'
 import Loading from '../App/Loading'
@@ -24,7 +23,7 @@ class UserLanding extends Component {
 
   render() {
     const {
-      data: { loading, userById },
+      data: { loading },
       classes
     } = this.props
     if (loading) return <Loading />
