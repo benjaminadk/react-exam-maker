@@ -3,6 +3,7 @@ import { graphql, compose } from 'react-apollo'
 import { withStyles } from '@material-ui/core/styles'
 import { USER_BY_ID } from '../../apollo/queries/userById'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 import DownloadIcon from '@material-ui/icons/GetAppSharp'
 import Loading from '../App/Loading'
 
@@ -29,6 +30,7 @@ class UserLanding extends Component {
     if (loading) return <Loading />
     return (
       <div className="UserLanding">
+        <Typography variant="h3">Welcome to Exam Maker</Typography>
         <Button
           variant="contained"
           classes={{ root: classes.button }}
