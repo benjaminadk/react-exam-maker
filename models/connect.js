@@ -8,7 +8,7 @@ const cb = () => console.log('MONGO CONNECTED')
 module.exports = async () => {
   try {
     mongoose.connect(
-      keys.MONGO_URI,
+      keys.MLAB_URI,
       options,
       cb
     )
