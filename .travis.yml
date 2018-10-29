@@ -8,7 +8,7 @@ cache:
 install:
   - npm install
   - cd client
-  - npm npm install
+  - npm install
 script:
   - npm run build
 deploy:
