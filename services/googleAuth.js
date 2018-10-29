@@ -43,6 +43,7 @@ const googleOauth = new GoogleStrategy(
         await savedUser.save()
         return done(null, {})
       } else {
+        console.log(user)
         userId = user._id
         const newToken = jwt.sign(
           {
