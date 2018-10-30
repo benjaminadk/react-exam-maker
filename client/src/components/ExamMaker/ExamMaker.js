@@ -164,7 +164,11 @@ class ExamMaker extends Component {
     if (node === 'choices') {
       let label = labelHelper(test[index].choices.length)
       test[index].choices.push({ label, text: '' })
-      test[index].answer.push(false)
+      if (test[index].variant === 2) {
+        test[index].answer.push(true)
+      } else {
+        test[index].answer.push(false)
+      }
     } else if (node === 'cover') {
       cover.push({ variant: '', text: '' })
     } else {
@@ -230,11 +234,7 @@ class ExamMaker extends Component {
 
   onChoiceChange = (e, i) => {
     const { test, index } = this.state
-    if (test[index].variant === 2) {
-      test[index].answer[i] = e.target.value
-    } else {
-      test[index].choices[i].text = e.target.value
-    }
+    test[index].choices[i].text = e.target.value
     this.setState({ test })
   }
 

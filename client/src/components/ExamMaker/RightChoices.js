@@ -59,10 +59,11 @@ function RightChoices({
                   checkedIcon={<CheckboxIcon />}
                   checked={test[index].answer[i]}
                   onChange={(e, checked) => onAnswerChange(e, checked, i)}
+                  disabled={test[index].variant === 2}
                 />
                 <TextField
                   variant="outlined"
-                  value={test[index].variant === 2 ? test[index].answer[i] : c.text}
+                  value={c.text}
                   onChange={e => onChoiceChange(e, i)}
                   label="Text"
                   className="textfield"

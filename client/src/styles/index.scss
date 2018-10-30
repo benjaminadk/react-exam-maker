@@ -27,21 +27,49 @@ code {
 
 // UserLanding Component
 .UserLanding {
+  display: grid;
+  grid-template-columns: 50% 50%;
   padding: 10px;
-}
 
-.logo {
-  height: 40px;
-  width: 40px;
-  background-image: url('https://s3.amazonaws.com/electron-exam/general/icon.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin-right: 20px;
-}
+  .heading {
+    margin-top: 20px;
+  }
 
-.download-icon {
-  margin-left: 20px;
+  .paragraph {
+    padding: 10px;
+  }
+
+  .download {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+    .download-logo {
+      height: 40px;
+      width: 40px;
+      background-image: url('https://s3.amazonaws.com/electron-exam/general/icon.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin-right: 20px;
+    }
+
+    .download-icon {
+      margin-left: 20px;
+    }
+  }
+
+  .format-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 65vh;
+      height: 65vh;
+    }
+  }
 }
 
 // MainNav Component
@@ -51,6 +79,12 @@ code {
   margin-right: 20px;
   border: 1px solid white;
   background-color: lightgrey;
+}
+
+.beta {
+  font-size: 0.65rem;
+  border: 1px solid white;
+  padding: 0 2px;
 }
 
 // scrollbar customization
