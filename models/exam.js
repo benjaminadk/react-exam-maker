@@ -1,15 +1,9 @@
 const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose)
 const { Schema } = mongoose
 
-const testItemSchema = new Schema({
-  variant: Number,
-  question: [{ variant: Number, text: String }],
-  choices: [{ label: String, text: String }],
-  answer: [Boolean],
-  explanation: [{ variant: Number, text: String }]
-})
-
 const examSchema = new Schema({
+  public: Boolean,
   author: String,
   title: String,
   code: String,
@@ -27,4 +21,5 @@ const examSchema = new Schema({
   ]
 })
 
+examSchema.plugin(AutoIncrement, { inc_field: 'id' })
 mongoose.model('exam', examSchema)

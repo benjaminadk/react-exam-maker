@@ -7,6 +7,7 @@ import MainNav from './components/MainNav/MainNav'
 import UserLanding from './components/UserLanding/UserLanding'
 import ExamMaker from './components/ExamMaker/ExamMaker'
 import ExamList from './components/ExamList/ExamList'
+import PublicExams from './components/PublicExams/PublicExams'
 import Home from './components/Home/Home'
 
 class App extends Component {
@@ -68,7 +69,13 @@ class App extends Component {
               exam={exam}
               unloadExam={this.unloadExam}
             />
-            <PrivateRoute path="/exams" component={ExamList} user={user} loadExam={this.loadExam} />
+            <PrivateRoute
+              path="/my-exams"
+              component={ExamList}
+              user={user}
+              loadExam={this.loadExam}
+            />
+            <PrivateRoute path="/public" component={PublicExams} />
           </Switch>
         </MainNav>
       </BrowserRouter>

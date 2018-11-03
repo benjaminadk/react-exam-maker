@@ -96,7 +96,9 @@ class MainNav extends React.Component {
 
   gotoExamMaker = () => this.props.history.push('/create')
 
-  gotoSavedExams = () => this.props.history.push('/exams')
+  gotoSavedExams = () => this.props.history.push('/my-exams')
+
+  gotoPublic = () => this.props.history.push('/public')
 
   gotoUserLanding = userId => this.props.history.push(`/user/${userId}`)
 
@@ -144,6 +146,7 @@ class MainNav extends React.Component {
             gotoHome={this.gotoHome}
             gotoExamMaker={this.gotoExamMaker}
             gotoSavedExams={this.gotoSavedExams}
+            gotoPublic={this.gotoPublic}
             gotoUserLanding={this.gotoUserLanding}
           />
         </Drawer>
