@@ -1,3 +1,71 @@
 .PublicExams {
   padding: 10px;
+
+  .header {
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0 3px;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 600px 1fr;
+  }
+
+  .preview {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .cover {
+      width: 250px;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+      overflow: hidden;
+
+      .cover-img {
+        width: 100px;
+      }
+
+      .cover-default {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+
+  .col-lg {
+    width: 30%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .col-sm {
+    width: 20%;
+  }
+
+  .end-align {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .v-list {
+    outline: none;
+  }
+
+  .v-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+  }
 }

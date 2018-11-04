@@ -22,20 +22,18 @@ module.exports = {
       return await models.Exam.find({ public: true })
     },
 
-    publicExamsPag: (root, { first, after, search }, { models }) => {
+    publicExamsPag: (root, { first, after }, { models }) => {
       let edgesArray = []
       let cursorNumeric = parseInt(Buffer.from(after, 'base64').toString('ascii'))
-      let re = search ? new RegExp(`${search}`, 'gi') : /\w/g
 
       if (!cursorNumeric) cursorNumeric = 0
       var edgesAndPageInfoPromise = new Promise((resolve, reject) => {
         let edges = models.Exam.where('id')
           .gt(cursorNumeric)
-          .find({ public: true, title: re }, (error, result) => {
+          .find({ public: true }, (error, result) => {
             if (error) console.log(`***Error - ${error}`)
           })
           .limit(first)
-          .sort({ title: 1 })
           .cursor()
 
         edges.on('data', response => {
@@ -60,12 +58,13 @@ module.exports = {
 
         edges.on('end', () => {
           let endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : NaN
-          let hasNextPage = new Promise((resolve, reject) => {
+          let hasNextPageFlag = new Promise((resolve, reject) => {
             if (endCursor) {
               let endCursorNumeric = parseInt(Buffer.from(endCursor, 'base64').toString('ascii'))
               models.Exam.where('id')
                 .gt(endCursorNumeric)
-                .estimatedDocumentCount((error, count) => {
+                .find({ public: true })
+                .countDocuments((error, count) => {
                   count > 0 ? resolve(true) : resolve(false)
                 })
             } else {
@@ -77,7 +76,7 @@ module.exports = {
             edges: edgesArray,
             pageInfo: {
               endCursor,
-              hasNextPage
+              hasNextPage: hasNextPageFlag
             }
           })
         })
@@ -85,7 +84,7 @@ module.exports = {
 
       let totalPromiseCount = new Promise((resolve, reject) => {
         if (totalCount === 0) {
-          totalCount = models.Exam.estimatedDocumentCount((error, count) => {
+          totalCount = models.Exam.find({ public: true }).countDocuments((error, count) => {
             if (error) reject(error)
             resolve(count)
           })

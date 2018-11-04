@@ -1,38 +1,21 @@
 import React, { Component } from 'react'
 import { compose, graphql } from 'react-apollo'
-import { withStyles } from '@material-ui/core/styles'
 import { MY_EXAMS } from '../../apollo/queries/myExams'
+import { PUBLIC_EXAMS_PAG } from '../../apollo/queries/publicExamsPag'
 import { DELETE_EXAM } from '../../apollo/mutations/deleteExam'
 import { MAKE_PUBLIC } from '../../apollo/mutations/makePublic'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
-import IconButton from '@material-ui/core/IconButton'
 import Divider from '@material-ui/core/Divider'
-import EditIcon from '@material-ui/icons/EditSharp'
-import DownloadIcon from '@material-ui/icons/GetAppSharp'
-import DeleteIcon from '@material-ui/icons/DeleteSharp'
-import LinkIcon from '@material-ui/icons/LinkSharp'
-import PublicIcon from '@material-ui/icons/PublicSharp'
+import Actions from './Actions'
+import CoverItem from './CoverItem'
+import DefaultCover from './DefaultCover'
 import Loading from '../App/Loading'
 import Confirm from '../App/Confirm'
 import Notification from '../App/Notification'
 import removeTypename from '../../utils/removeTypename'
 import copyToClipboard from '../../utils/copyToClipboard'
-
-const styles = theme => ({
-  caption: {
-    width: 250,
-    fontSize: '.65rem'
-  },
-  iconButton: {
-    '&:hover': {
-      color: theme.palette.primary.main,
-      backgroundColor: 'transparent'
-    }
-  }
-})
 
 class ExamList extends Component {
   constructor(props) {
@@ -85,7 +68,10 @@ class ExamList extends Component {
   makePublic = async (examId, bool) => {
     let response = await this.props.makePublic({
       variables: { examId, bool },
-      refetchQueries: [{ query: MY_EXAMS }]
+      refetchQueries: [
+        { query: MY_EXAMS },
+        { query: PUBLIC_EXAMS_PAG, variables: { first: 5, after: '' } }
+      ]
     })
     let { success, message } = response.data.makePublic
     this.setState(
@@ -124,13 +110,12 @@ class ExamList extends Component {
 
   render() {
     const {
-      data: { loading, myExams },
-      classes
+      data: { loading, myExams }
     } = this.props
     const { confirmDE, notify, variant, message } = this.state
     if (loading) return <Loading />
     return [
-      <div key="exam-list" className="ExamList">
+      <div key="exam-list" className="MyExams">
         <Typography variant="overline">Saved Exams</Typography>
         <Divider className="divider" />
         <div className="cards">
@@ -139,80 +124,21 @@ class ExamList extends Component {
               <Card key={`exam-${i}`} square elevation={1} className="card">
                 <CardContent>
                   <div className="cover">
-                    {e.cover.length
-                      ? e.cover.map((c, j) => {
-                          if (c.variant === 0)
-                            return (
-                              <img key={c.text} src={c.text} alt="cover" className="cover-img" />
-                            )
-                          else if (c.variant === 1)
-                            return (
-                              <Typography
-                                key={c.text}
-                                variant="caption"
-                                align="center"
-                                classes={{ caption: classes.caption }}
-                                noWrap
-                              >
-                                {c.text}
-                              </Typography>
-                            )
-                          else
-                            return (
-                              <Typography key={c.text} variant="subtitle2">
-                                {c.text}
-                              </Typography>
-                            )
-                        })
-                      : [
-                          <Typography key={`title-${i}`} variant="subtitle2">
-                            {e.title}
-                          </Typography>,
-                          <img
-                            key={`cover-${i}`}
-                            src="https://s3.amazonaws.com/electron-exam/general/icon.png"
-                            alt="default"
-                            className="cover-filler"
-                          />,
-                          <Typography key={`code-${i}`} variant="caption">
-                            Create cover for cooler display
-                          </Typography>
-                        ]}
+                    {e.cover.length ? (
+                      e.cover.map((c, j) => <CoverItem key={j} node={c} />)
+                    ) : (
+                      <DefaultCover title={e.title} />
+                    )}
                   </div>
                 </CardContent>
-                <CardActions className="actions">
-                  <IconButton
-                    onClick={() => this.editExam(e)}
-                    classes={{ root: classes.iconButton }}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => this.downloadExam(e)}
-                    classes={{ root: classes.iconButton }}
-                  >
-                    <DownloadIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => this.copyLink(e.id)}
-                    classes={{ root: classes.iconButton }}
-                  >
-                    <LinkIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => this.makePublic(e.id, e.public)}
-                    classes={{ root: classes.iconButton }}
-                    style={{ color: e.public && 'rgb(36, 132, 235)' }}
-                  >
-                    <PublicIcon color="inherit" />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => this.openConfirmDE(e.id)}
-                    classes={{ root: classes.iconButton }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </CardActions>
+                <Actions
+                  exam={e}
+                  editExam={this.editExam}
+                  downloadExam={this.downloadExam}
+                  copyLink={this.copyLink}
+                  makePublic={this.makePublic}
+                  openConfirmDE={this.openConfirmDE}
+                />
               </Card>
             ))
           ) : (
@@ -237,7 +163,6 @@ class ExamList extends Component {
 }
 
 export default compose(
-  withStyles(styles),
   graphql(MY_EXAMS),
   graphql(DELETE_EXAM, { name: 'deleteExam' }),
   graphql(MAKE_PUBLIC, { name: 'makePublic' })

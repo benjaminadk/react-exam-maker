@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const PUBLIC_EXAMS_PAG = gql`
-  query($first: Int, $after: String, $search: String) {
-    publicExamsPag(first: $first, after: $after, search: $search) {
+  query($first: Int, $after: String) {
+    publicExamsPag(first: $first, after: $after) {
       totalCount
       edges {
         cursor

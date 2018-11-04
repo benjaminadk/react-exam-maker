@@ -17,7 +17,7 @@ function MenuLeft({
   user,
   gotoHome,
   gotoExamMaker,
-  gotoSavedExams,
+  gotoMyExams,
   gotoPublic,
   gotoUserLanding,
   classes
@@ -25,7 +25,7 @@ function MenuLeft({
   const list = [
     { text: 'Home', icon: <HomeIcon />, click: gotoHome },
     { text: 'Create Exam', icon: <CreateIcon />, click: gotoExamMaker },
-    { text: 'Saved Exams', icon: <ExamIcon />, click: gotoSavedExams },
+    { text: 'My Exams', icon: <ExamIcon />, click: gotoMyExams },
     { text: 'Public Exams', icon: <PublicIcon />, click: gotoPublic }
   ]
   return (

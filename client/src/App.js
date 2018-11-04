@@ -6,7 +6,7 @@ import { AUTOLOGIN } from './apollo/mutations/autoLogin'
 import MainNav from './components/MainNav/MainNav'
 import UserLanding from './components/UserLanding/UserLanding'
 import ExamMaker from './components/ExamMaker/ExamMaker'
-import ExamList from './components/ExamList/ExamList'
+import MyExams from './components/MyExams/MyExams'
 import PublicExams from './components/PublicExams/PublicExams'
 import Home from './components/Home/Home'
 
@@ -17,7 +17,7 @@ class App extends Component {
     exam: null
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.handleAutoLogin()
   }
 
@@ -71,7 +71,7 @@ class App extends Component {
             />
             <PrivateRoute
               path="/my-exams"
-              component={ExamList}
+              component={MyExams}
               user={user}
               loadExam={this.loadExam}
             />

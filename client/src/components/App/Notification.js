@@ -54,6 +54,7 @@ function MySnackbarContent(props) {
 
   return (
     <SnackbarContent
+      component="div"
       classes={{ root: classes.snackbar }}
       className={classNames(classes[variant], className)}
       message={

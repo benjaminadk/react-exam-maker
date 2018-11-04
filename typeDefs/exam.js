@@ -107,7 +107,7 @@ module.exports = gql`
     myExams: [Exam]
     examById(examId: ID): Exam
     publicExams: [Exam]
-    publicExamsPag(first: Int, after: String, search: String): PagPayload
+    publicExamsPag(first: Int, after: String): PagPayload
   }
 
   type Mutation {
