@@ -12,10 +12,10 @@ class ExamList extends Component {
   noRowsRenderer = () => <Typography variant="h6">No Exams returned from Graphql Server</Typography>
 
   rowRenderer = ({ key, index, style }) => {
-    let content
+    let exam
     if (index < virtualizedList.length) {
-      content = virtualizedList[index].node
-      if (!content) {
+      exam = virtualizedList[index].node
+      if (!exam) {
         return null
       }
     } else {
@@ -29,10 +29,12 @@ class ExamList extends Component {
       <ListItem
         key={key}
         style={style}
-        title={content.title}
-        code={content.code}
-        length={content.test.length}
-        previewExam={() => this.props.previewExam(content)}
+        title={exam.title}
+        code={exam.code}
+        length={exam.test.length}
+        previewExam={() => this.props.previewExam(exam)}
+        copyLink={() => this.props.copyLink(exam.id)}
+        downloadExam={() => this.props.downloadExam(exam)}
       />
     )
   }

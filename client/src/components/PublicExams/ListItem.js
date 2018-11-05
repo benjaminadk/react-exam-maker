@@ -17,7 +17,7 @@ const styles = theme => ({
   }
 })
 
-function ListItem({ style, title, code, length, previewExam, classes }) {
+function ListItem({ style, title, code, length, previewExam, copyLink, downloadExam, classes }) {
   return (
     <Paper style={style} square className="v-list-item">
       <Typography variant="subtitle2" className="col-lg">
@@ -33,10 +33,10 @@ function ListItem({ style, title, code, length, previewExam, classes }) {
         <IconButton onClick={previewExam} classes={{ root: classes.iconButton }}>
           <PreviewIcon />
         </IconButton>
-        <IconButton classes={{ root: classes.iconButton }}>
+        <IconButton onClick={copyLink} classes={{ root: classes.iconButton }}>
           <LinkIcon />
         </IconButton>
-        <IconButton classes={{ root: classes.iconButton }}>
+        <IconButton onClick={downloadExam} classes={{ root: classes.iconButton }}>
           <DownloadIcon />
         </IconButton>
       </div>

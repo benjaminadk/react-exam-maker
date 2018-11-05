@@ -16,6 +16,7 @@ import Confirm from '../App/Confirm'
 import Notification from '../App/Notification'
 import removeTypename from '../../utils/removeTypename'
 import copyToClipboard from '../../utils/copyToClipboard'
+import downloadExam from '../../utils/downloadExam'
 
 class ExamList extends Component {
   constructor(props) {
@@ -36,33 +37,20 @@ class ExamList extends Component {
   }
 
   downloadExam = exam => {
-    const { author, title, code, pass, time, cover, test } = exam
-    let examDL = {
-      author,
-      title,
-      code,
-      pass,
-      time,
-      cover,
-      test
-    }
-    let filename =
-      title
-        .toLowerCase()
-        .trim()
-        .replace(/\s/g, '-') + '.json'
-    let str = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(examDL))}`
-    let node = document.createElement('a')
-    node.setAttribute('href', str)
-    node.setAttribute('download', filename)
-    document.body.appendChild(node)
-    node.click()
-    node.remove()
+    downloadExam(exam)
   }
 
   copyLink = examId => {
     let link = `https://exam-maker.herokuapp.com/api/json?examId=${examId}`
     copyToClipboard(link)
+    this.setState(
+      {
+        notify: true,
+        variant: 'info',
+        message: 'Link Copied to Clipboard'
+      },
+      () => this.closeNotify()
+    )
   }
 
   makePublic = async (examId, bool) => {

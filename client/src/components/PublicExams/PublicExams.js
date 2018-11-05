@@ -7,12 +7,15 @@ import Loading from '../App/Loading'
 import ExamList from './ExamList'
 import ListHeader from './ListHeader'
 import Preview from './Preview'
+import Notification from '../App/Notification'
+import copyToClipboard from '../../utils/copyToClipboard'
+import downloadExam from '../../utils/downloadExam'
 
 const config = {
   options: props => {
     let after = props.endCursor || ''
     return {
-      variables: { first: 5, after }
+      variables: { first: 8, after }
     }
   },
   force: true,
@@ -47,15 +50,37 @@ class PublicExams extends Component {
     super(props)
 
     this.state = {
-      exam: null
+      exam: null,
+      notify: false,
+      variant: '',
+      message: ''
     }
   }
 
   previewExam = exam => this.setState({ exam })
 
+  copyLink = examId => {
+    let link = `https://exam-maker.herokuapp.com/api/json?examId=${examId}`
+    copyToClipboard(link)
+    this.setState(
+      {
+        notify: true,
+        variant: 'info',
+        message: 'Link Copied to Clipboard'
+      },
+      () => this.closeNotify()
+    )
+  }
+
+  downloadExam = exam => {
+    downloadExam(exam)
+  }
+
+  closeNotify = () => this.setState({ notify: false })
+
   render() {
     const { loading, publicExamsPag, loadMoreRows } = this.props
-    const { exam } = this.state
+    const { exam, notify, variant, message } = this.state
     let renderChild
     if (loading) {
       renderChild = <Loading />
@@ -66,11 +91,13 @@ class PublicExams extends Component {
           exams={publicExamsPag.edges}
           totalCount={publicExamsPag.totalCount}
           previewExam={this.previewExam}
+          copyLink={this.copyLink}
+          downloadExam={this.downloadExam}
         />
       )
     }
-    return (
-      <div className="PublicExams">
+    return [
+      <div key="public-exams" className="PublicExams">
         <Typography variant="overline">Public Exam Files</Typography>
         <Divider />
         <ListHeader />
@@ -78,8 +105,9 @@ class PublicExams extends Component {
           {renderChild}
           <Preview exam={exam} />
         </div>
-      </div>
-    )
+      </div>,
+      <Notification key="notification" open={notify} variant={variant} message={message} />
+    ]
   }
 }
 
