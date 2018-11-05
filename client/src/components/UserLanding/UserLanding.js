@@ -32,7 +32,7 @@ class UserLanding extends Component {
     return (
       <div className="UserLanding">
         <div>
-          <Typography variant="h4">Documentation</Typography>
+          <Typography variant="overline">Documentation</Typography>
           <Divider />
           <Typography variant="h6" className="heading">
             Introduction
@@ -61,9 +61,6 @@ class UserLanding extends Component {
             Simulator validates exams when they load, and only accepts those that pass the
             validation check. The following is a diagram representation of the accepted JSON format.
           </Typography>
-          {/* <div className="format-image">
-            <img src="https://s3.amazonaws.com/electron-exam/general/schema.png" alt="" />
-          </div> */}
         </div>
       </div>
     )

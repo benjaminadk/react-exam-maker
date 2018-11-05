@@ -1,13 +1,16 @@
-import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import React, { Component, Suspense, lazy } from 'react'
+import { BrowserRouter, Switch } from 'react-router-dom'
 import { Auth, PropsRoute, PrivateRoute } from './utils/routing'
 import { graphql, compose } from 'react-apollo'
 import { AUTOLOGIN } from './apollo/mutations/autoLogin'
 import MainNav from './components/MainNav/MainNav'
-import UserLanding from './components/UserLanding/UserLanding'
-import ExamMaker from './components/ExamMaker/ExamMaker'
-import ExamList from './components/ExamList/ExamList'
-import Home from './components/Home/Home'
+import Loading from './components/App/Loading'
+
+const Home = lazy(() => import('./components/Home/Home'))
+const ExamMaker = lazy(() => import('./components/ExamMaker/ExamMaker'))
+const MyExams = lazy(() => import('./components/MyExams/MyExams'))
+const UserLanding = lazy(() => import('./components/UserLanding/UserLanding'))
+const PublicExams = lazy(() => import('./components/PublicExams/PublicExams'))
 
 class App extends Component {
   state = {
@@ -16,7 +19,7 @@ class App extends Component {
     exam: null
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.handleAutoLogin()
   }
 
@@ -53,24 +56,34 @@ class App extends Component {
     const { user, loggedIn, exam } = this.state
     return (
       <BrowserRouter key="main-app">
-        <MainNav loggedIn={loggedIn} user={user} handleLogout={this.handleLogout}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <PropsRoute
-              path="/user/:userId"
-              component={UserLanding}
-              handleGoogleLogin={this.handleGoogleLogin}
-            />
-            <PrivateRoute
-              path="/create"
-              component={ExamMaker}
-              user={user}
-              exam={exam}
-              unloadExam={this.unloadExam}
-            />
-            <PrivateRoute path="/exams" component={ExamList} user={user} loadExam={this.loadExam} />
-          </Switch>
-        </MainNav>
+        <div>
+          <MainNav loggedIn={loggedIn} user={user} handleLogout={this.handleLogout}>
+            <Suspense fallback={<Loading />}>
+              <Switch>
+                <PropsRoute exact path="/" component={Home} />
+                <PropsRoute
+                  path="/user/:userId"
+                  component={UserLanding}
+                  handleGoogleLogin={this.handleGoogleLogin}
+                />
+                <PrivateRoute
+                  path="/create"
+                  component={ExamMaker}
+                  user={user}
+                  exam={exam}
+                  unloadExam={this.unloadExam}
+                />
+                <PrivateRoute
+                  path="/my-exams"
+                  component={MyExams}
+                  user={user}
+                  loadExam={this.loadExam}
+                />
+                <PrivateRoute path="/public" component={PublicExams} />
+              </Switch>
+            </Suspense>
+          </MainNav>
+        </div>
       </BrowserRouter>
     )
   }

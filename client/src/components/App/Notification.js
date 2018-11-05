@@ -30,7 +30,7 @@ const styles1 = theme => ({
     backgroundColor: theme.palette.error.dark
   },
   info: {
-    backgroundColor: theme.palette.primary.dark
+    backgroundColor: theme.palette.primary.main
   },
   warning: {
     backgroundColor: amber[700]
@@ -54,6 +54,8 @@ function MySnackbarContent(props) {
 
   return (
     <SnackbarContent
+      component="div"
+      elevation={0}
       classes={{ root: classes.snackbar }}
       className={classNames(classes[variant], className)}
       message={
@@ -110,7 +112,7 @@ class CustomizedSnackbars extends Component {
           horizontal: 'left'
         }}
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={10000}
         onClose={this.handleClose}
       >
         <MySnackbarContentWrapper onClose={this.handleClose} variant={variant} message={message} />

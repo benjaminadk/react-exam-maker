@@ -4,6 +4,7 @@ export const ALL_EXAMS = gql`
   query {
     allExams {
       id
+      public
       author
       title
       code

@@ -130,7 +130,12 @@ function LeftColumn({
       />
       <Divider className="divider" />
       <br />
-      <Button variant="contained" onClick={saveExam} classes={{ root: classes.button }}>
+      <Button
+        variant="contained"
+        onClick={saveExam}
+        disabled={!title || !code || !pass || !time}
+        classes={{ root: classes.button }}
+      >
         Save Exam
         <SaveIcon className={classes.icon} />
       </Button>

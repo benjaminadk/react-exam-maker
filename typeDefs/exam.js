@@ -3,6 +3,7 @@ const { gql } = require('apollo-server-express')
 module.exports = gql`
   type Exam {
     id: ID
+    public: Boolean
     author: String
     title: String
     code: String
@@ -85,14 +86,33 @@ module.exports = gql`
     exam: Exam
   }
 
+  type Edge {
+    node: Exam
+    cursor: String
+  }
+
+  type PageInfo {
+    endCursor: String
+    hasNextPage: Boolean
+  }
+
+  type PagPayload {
+    totalCount: Int
+    edges: [Edge]
+    pageInfo: PageInfo
+  }
+
   type Query {
     allExams: [Exam]
     myExams: [Exam]
     examById(examId: ID): Exam
+    publicExams: [Exam]
+    publicExamsPag(first: Int, after: String): PagPayload
   }
 
   type Mutation {
     saveExam(input: ExamInput): ExamPayload
     deleteExam(examId: ID): ExamPayload
+    makePublic(examId: ID, bool: Boolean): ExamPayload
   }
 `

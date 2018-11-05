@@ -170,9 +170,9 @@ class ExamMaker extends Component {
         test[index].answer.push(false)
       }
     } else if (node === 'cover') {
-      cover.push({ variant: '', text: '' })
+      cover.push({ variant: 1, text: '' })
     } else {
-      test[index][node].push({ variant: '', text: '' })
+      test[index][node].push({ variant: 1, text: '' })
     }
     this.setState({ test, cover })
   }
@@ -198,7 +198,37 @@ class ExamMaker extends Component {
     this.setState({ variant: 'none' })
   }
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value })
+  onChange = e => {
+    const { name, value } = e.target
+    let newValue
+    if (name === 'title') {
+      if (value.length > 20) {
+        newValue = value.slice(0, 20)
+      } else {
+        newValue = value.slice(0)
+      }
+    } else if (name === 'code') {
+      if (value.length > 7) {
+        newValue = value.slice(0, 7)
+      } else {
+        newValue = value.slice(0)
+      }
+    } else {
+      const re = /\D/g
+      if (re.test(value)) {
+        newValue = value
+          .slice(0)
+          .split('')
+          .filter(v => Number.isInteger(Number(v)))
+          .join('')
+      } else if (value.length > 3) {
+        newValue = value.slice(0, 3)
+      } else {
+        newValue = value.slice(0)
+      }
+    }
+    this.setState({ [name]: newValue })
+  }
 
   onTypeChange = e => {
     const { test, index } = this.state
@@ -209,6 +239,7 @@ class ExamMaker extends Component {
   }
 
   onToggleCover = (e, value, i) => {
+    if (!Number.isInteger(value)) return
     const { cover } = this.state
     cover[i].variant = value
     this.setState({ cover })
@@ -221,6 +252,7 @@ class ExamMaker extends Component {
   }
 
   onToggleQuestion = (e, value, i) => {
+    if (!Number.isInteger(value)) return
     const { test, index } = this.state
     test[index].question[i].variant = value
     this.setState({ test })
@@ -246,6 +278,7 @@ class ExamMaker extends Component {
   }
 
   onToggleExplanation = (e, value, i) => {
+    if (!Number.isInteger(value)) return
     const { test, index } = this.state
     test[index].explanation[i].variant = value
     this.setState({ test })

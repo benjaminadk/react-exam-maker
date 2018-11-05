@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
-export const MY_EXAMS = gql`
+export const PUBLIC_EXAMS = gql`
   query {
-    myExams {
+    publicExams {
       id
       public
       author
