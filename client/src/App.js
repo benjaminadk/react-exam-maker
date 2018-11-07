@@ -52,12 +52,19 @@ class App extends Component {
 
   unloadExam = () => this.setState({ exam: null })
 
+  openAbout = () => {}
+
   render() {
     const { user, loggedIn, exam } = this.state
     return (
       <BrowserRouter key="main-app">
         <div>
-          <MainNav loggedIn={loggedIn} user={user} handleLogout={this.handleLogout}>
+          <MainNav
+            loggedIn={loggedIn}
+            user={user}
+            handleLogout={this.handleLogout}
+            openAbout={this.openAbout}
+          >
             <Suspense fallback={<Loading />}>
               <Switch>
                 <PropsRoute exact path="/" component={Home} />

@@ -5,6 +5,7 @@ import { USER_BY_ID } from '../../apollo/queries/userById'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
+// import Paper from '@material-ui/core/Paper'
 import DownloadIcon from '@material-ui/icons/GetAppSharp'
 import Loading from '../App/Loading'
 
@@ -31,36 +32,13 @@ class UserLanding extends Component {
     if (loading) return <Loading />
     return (
       <div className="UserLanding">
-        <div>
-          <Typography variant="overline">Documentation</Typography>
-          <Divider />
-          <Typography variant="h6" className="heading">
-            Introduction
-          </Typography>
-          <Typography variant="body2" align="justify" className="paragraph">
-            Exam Maker is a web application that allows a user create and manage exams that can be
-            taken with Exam Simulator. Exam Simulator is easily downloaded by clicking the button
-            below and selecting the latest version for your preferred OS.
-          </Typography>
-          <div className="download">
-            <Button
-              variant="contained"
-              classes={{ root: classes.button }}
-              href="https://github.com/benjaminadk/electron-exam/releases"
-              target="blank"
-            >
-              <div className="download-logo" /> Download Exam Simulator{' '}
-              <DownloadIcon className="download-icon" />
-            </Button>
-          </div>
-          <Typography variant="h6" className="heading">
-            Exam Format
-          </Typography>
-          <Typography variant="body2" align="justify" className="paragraph">
-            Exams files have the JSON extension and must be formatted in a specific way. Exam
-            Simulator validates exams when they load, and only accepts those that pass the
-            validation check. The following is a diagram representation of the accepted JSON format.
-          </Typography>
+        <Typography variant="overline">Welcome to Exam Maker</Typography>
+        <Divider />
+        <div className="content">
+          <Button variant="contained" color="primary" classes={{ root: classes.button }}>
+            <DownloadIcon />
+            Download Exam Simulator for Windows
+          </Button>
         </div>
       </div>
     )

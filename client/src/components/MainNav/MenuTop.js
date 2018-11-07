@@ -10,9 +10,17 @@ import ExamIcon from '@material-ui/icons/SchoolSharp'
 import PublicIcon from '@material-ui/icons/PublicSharp'
 import UserIcon from '@material-ui/icons/PersonSharp'
 
-const styles = theme => ({})
+const styles = theme => ({
+  listItem: {
+    '&:hover': {
+      color: 'rgb(37, 135, 233)',
+      backgroundColor: 'rgb(227, 240, 252)',
+      outline: '2px solid rgb(37, 135, 233)'
+    }
+  }
+})
 
-function MenuLeft({
+function MenuTop({
   loggedIn,
   user,
   gotoHome,
@@ -31,13 +39,17 @@ function MenuLeft({
   return (
     <List disablePadding>
       {list.map((l, i) => (
-        <ListItem key={l.text} button onClick={l.click}>
+        <ListItem key={l.text} button onClick={l.click} classes={{ button: classes.listItem }}>
           <ListItemIcon>{l.icon}</ListItemIcon>
           <ListItemText primary={l.text} />
         </ListItem>
       ))}
       {loggedIn && (
-        <ListItem button onClick={() => gotoUserLanding(user.id)}>
+        <ListItem
+          button
+          onClick={() => gotoUserLanding(user.id)}
+          classes={{ button: classes.listItem }}
+        >
           <ListItemIcon>
             <UserIcon />
           </ListItemIcon>
@@ -48,4 +60,4 @@ function MenuLeft({
   )
 }
 
-export default withStyles(styles)(MenuLeft)
+export default withStyles(styles)(MenuTop)

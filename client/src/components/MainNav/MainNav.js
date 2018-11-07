@@ -11,7 +11,8 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import MenuLeft from './MenuLeft'
+import MenuTop from './MenuTop'
+import MenuBottom from './MenuBottom'
 import TopBar from './TopBar'
 
 const drawerWidth = 240
@@ -102,8 +103,17 @@ class MainNav extends React.Component {
 
   gotoUserLanding = userId => this.props.history.push(`/user/${userId}`)
 
+  gotoLink = link => {
+    let node = document.createElement('a')
+    node.setAttribute('href', link)
+    node.setAttribute('target', '_blank')
+    document.body.appendChild(node)
+    node.click()
+    node.remove()
+  }
+
   render() {
-    const { loggedIn, user, handleLogout, classes } = this.props
+    const { loggedIn, user, handleLogout, openAbout, classes } = this.props
 
     return (
       <div className={classes.root}>
@@ -140,7 +150,7 @@ class MainNav extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <MenuLeft
+          <MenuTop
             loggedIn={loggedIn}
             user={user}
             gotoHome={this.gotoHome}
@@ -149,6 +159,8 @@ class MainNav extends React.Component {
             gotoPublic={this.gotoPublic}
             gotoUserLanding={this.gotoUserLanding}
           />
+          <Divider />
+          <MenuBottom gotoLink={this.gotoLink} openAbout={openAbout} />
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />

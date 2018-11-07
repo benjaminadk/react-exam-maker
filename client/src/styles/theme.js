@@ -1,16 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: 'rgb(36, 132, 235)'
-    },
-    secondary: {
-      main: 'rgb(247, 229, 29)'
-    }
-  }
-})
-
 export default createMuiTheme({
   props: {
     MuiButtonBase: {
@@ -23,6 +12,14 @@ export default createMuiTheme({
       paper: {
         borderRadius: 0
       }
+    },
+    MuiIconButton: {
+      root: {
+        borderRadius: 0,
+        '&:hover': {
+          backgroundColor: 'transparent'
+        }
+      }
     }
   },
   typography: {
@@ -31,10 +28,10 @@ export default createMuiTheme({
   },
   palette: {
     primary: {
-      main: theme.palette.primary.main
+      main: 'rgb(36, 132, 235)'
     },
     secondary: {
-      main: theme.palette.secondary.main
+      main: 'rgb(247, 229, 29)'
     }
   }
 })
