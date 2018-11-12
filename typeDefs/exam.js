@@ -9,6 +9,7 @@ module.exports = gql`
     code: String
     pass: Int
     time: Int
+    image: String
     cover: [Cover]
     test: [TestItem]
   }
@@ -48,6 +49,7 @@ module.exports = gql`
     code: String
     pass: Int
     time: Int
+    image: String
     cover: [CoverInput]
     test: [TestItemInput]
   }

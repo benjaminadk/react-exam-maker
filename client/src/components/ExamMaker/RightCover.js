@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import IconButton from '@material-ui/core/IconButton'
@@ -67,64 +68,70 @@ function RightCover({
   classes
 }) {
   return (
-    <div className="node">
-      <div className="title">
-        <Typography variant="overline">Cover Node</Typography>
-        <IconButton onClick={addCoverNode} classes={{ root: classes.iconButton }}>
-          <AddIcon />
-        </IconButton>
+    <>
+      <Typography variant="overline" align="center">
+        Cover Editor
+      </Typography>
+      <Divider className="divider" />
+      <div className="node">
+        <div className="title">
+          <Typography variant="overline">Cover Node</Typography>
+          <IconButton onClick={addCoverNode} classes={{ root: classes.iconButton }}>
+            <AddIcon />
+          </IconButton>
+        </div>
+        <div className="row-wrapper">
+          {cover.map((c, i) => (
+            <div key={`c-node-${i}`} className="row">
+              <ToggleButtonGroup
+                value={c.variant}
+                onChange={(e, v) => onToggleCover(e, v, i)}
+                exclusive
+                selected
+                classes={{
+                  root: classes.toggleGroup,
+                  selected: classes.toggleSelected
+                }}
+              >
+                {NODE_TYPES.map((n, j) => (
+                  <ToggleButton
+                    key={`toggle-${j}`}
+                    value={n.value}
+                    classes={{
+                      root: classes.toggleButton,
+                      selected: classes.toggleButtonSelected
+                    }}
+                  >
+                    {n.icon}
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+              <TextField
+                variant="outlined"
+                value={c.text}
+                onChange={e => onCoverChange(e, i)}
+                label="Text / Source URL"
+                className="textfield"
+                InputLabelProps={{ shrink: true }}
+                InputProps={{
+                  classes: {
+                    root: classes.outlinedInput,
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.input
+                  }
+                }}
+              />
+              <IconButton
+                onClick={() => removeCoverNode(i, 'cover')}
+                classes={{ root: classes.iconButton }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="row-wrapper">
-        {cover.map((c, i) => (
-          <div key={`c-node-${i}`} className="row">
-            <ToggleButtonGroup
-              value={c.variant}
-              onChange={(e, v) => onToggleCover(e, v, i)}
-              exclusive
-              selected
-              classes={{
-                root: classes.toggleGroup,
-                selected: classes.toggleSelected
-              }}
-            >
-              {NODE_TYPES.map((n, j) => (
-                <ToggleButton
-                  key={`toggle-${j}`}
-                  value={n.value}
-                  classes={{
-                    root: classes.toggleButton,
-                    selected: classes.toggleButtonSelected
-                  }}
-                >
-                  {n.icon}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-            <TextField
-              variant="outlined"
-              value={c.text}
-              onChange={e => onCoverChange(e, i)}
-              label="Text / Source URL"
-              className="textfield"
-              InputLabelProps={{ shrink: true }}
-              InputProps={{
-                classes: {
-                  root: classes.outlinedInput,
-                  notchedOutline: classes.notchedOutline,
-                  input: classes.input
-                }
-              }}
-            />
-            <IconButton
-              onClick={() => removeCoverNode(i, 'cover')}
-              classes={{ root: classes.iconButton }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   )
 }
 

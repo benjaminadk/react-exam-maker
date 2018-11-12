@@ -27,6 +27,7 @@ class ExamMaker extends Component {
       code: '',
       pass: '',
       time: '',
+      image: '',
       cover: [],
       index: null,
       test: [],
@@ -49,6 +50,7 @@ class ExamMaker extends Component {
           code: exam.code,
           pass: exam.pass,
           time: exam.time,
+          image: exam.image,
           cover: exam.cover,
           test: exam.test,
           index: exam.test.length ? 0 : null,
@@ -68,7 +70,7 @@ class ExamMaker extends Component {
   setMode = mode => this.setState({ mode })
 
   saveExam = async () => {
-    const { examId, title, code, pass, time, cover, test } = this.state
+    const { examId, title, code, pass, time, image, cover, test } = this.state
     const {
       user: { id }
     } = this.props
@@ -81,6 +83,7 @@ class ExamMaker extends Component {
           code,
           pass: parseInt(pass, 10),
           time: parseInt(time, 10),
+          image,
           cover,
           test
         }
@@ -100,7 +103,7 @@ class ExamMaker extends Component {
   }
 
   downloadExam = () => {
-    const { title, code, pass, time, cover, test } = this.state
+    const { title, code, pass, time, image, cover, test } = this.state
     const {
       user: { username }
     } = this.props
@@ -110,6 +113,7 @@ class ExamMaker extends Component {
       code,
       pass: parseInt(pass, 10),
       time: parseInt(time, 10),
+      image,
       cover,
       test
     }
@@ -138,7 +142,7 @@ class ExamMaker extends Component {
     }
     test.push(item)
     this.resetEditor()
-    this.setState({ index: test.length - 1, test }, () => {
+    this.setState({ index: test.length - 1, mode: 0, test }, () => {
       setTimeout(() => {
         this.questionTile.current.scrollIntoView({
           behavior: 'smooth',
@@ -192,7 +196,7 @@ class ExamMaker extends Component {
     this.setState({ test: newTest, cover: newCover })
   }
 
-  setIndex = index => this.setState({ index })
+  setIndex = index => this.setState({ index, mode: 0 })
 
   resetEditor = () => {
     this.setState({ variant: 'none' })
@@ -213,6 +217,8 @@ class ExamMaker extends Component {
       } else {
         newValue = value.slice(0)
       }
+    } else if (name === 'image') {
+      newValue = value.slice(0)
     } else {
       const re = /\D/g
       if (re.test(value)) {
@@ -324,7 +330,7 @@ class ExamMaker extends Component {
   closeNotification = () => this.setState({ notifySE: false })
 
   render() {
-    const { mode, title, code, pass, time, cover, test, index } = this.state
+    const { mode, title, code, pass, time, image, cover, test, index } = this.state
     const { confirmRQ, notifySE, variantSE, messageSE } = this.state
     return [
       <div key="exam-maker" className="ExamMaker">
@@ -335,6 +341,7 @@ class ExamMaker extends Component {
           code={code}
           pass={pass}
           time={time}
+          image={image}
           onChange={this.onChange}
           setMode={this.setMode}
           saveExam={this.saveExam}
@@ -384,39 +391,27 @@ class ExamMaker extends Component {
               />
             </React.Fragment>
           ) : mode === 1 ? (
-            <React.Fragment>
-              <Typography variant="overline" align="center">
-                Cover Editor
-              </Typography>
-              <Divider className="divider" />
-              <RightCover
-                cover={cover}
-                addCoverNode={() => this.addNode('cover')}
-                onToggleCover={this.onToggleCover}
-                onCoverChange={this.onCoverChange}
-                removeCoverNode={this.removeNode}
-              />
-            </React.Fragment>
+            <RightCover
+              cover={cover}
+              addCoverNode={() => this.addNode('cover')}
+              onToggleCover={this.onToggleCover}
+              onCoverChange={this.onCoverChange}
+              removeCoverNode={this.removeNode}
+            />
           ) : (
-            <React.Fragment>
-              <Typography variant="overline" align="center">
-                JSON View
-              </Typography>
-              <Divider className="divider" />
-              <RightJSON
-                addQuestion={this.addQuestion}
-                updateJSON={this.updateJSON}
-                addNode={this.addNode}
-                exam={{
-                  title,
-                  code,
-                  pass: parseInt(pass, 10),
-                  time: parseInt(time, 10),
-                  cover,
-                  test
-                }}
-              />
-            </React.Fragment>
+            <RightJSON
+              addQuestion={this.addQuestion}
+              updateJSON={this.updateJSON}
+              addNode={this.addNode}
+              exam={{
+                title,
+                code,
+                pass: parseInt(pass, 10),
+                time: parseInt(time, 10),
+                cover,
+                test
+              }}
+            />
           )}
           <Divider />
         </div>

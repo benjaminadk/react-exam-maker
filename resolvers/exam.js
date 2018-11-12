@@ -37,7 +37,7 @@ module.exports = {
           .cursor()
 
         edges.on('data', response => {
-          let { id, public, author, title, code, pass, time, cover, test } = response
+          let { id, public, author, title, code, pass, time, image, cover, test } = response
           edgesArray.push({
             cursor: Buffer.from(id.toString()).toString('base64'),
             node: {
@@ -48,6 +48,7 @@ module.exports = {
               code,
               pass,
               time,
+              image,
               cover,
               test
             }
@@ -110,7 +111,7 @@ module.exports = {
 
   Mutation: {
     saveExam: async (root, { input }, { models }) => {
-      const { examId, author, title, code, pass, time, cover, test } = input
+      const { examId, author, title, code, pass, time, image, cover, test } = input
       let exam = await models.Exam.findOne({ id: examId })
       if (!exam) {
         let newExam = new models.Exam({
@@ -120,6 +121,7 @@ module.exports = {
           code,
           pass,
           time,
+          image,
           cover,
           test
         })
@@ -139,7 +141,7 @@ module.exports = {
         }
       } else {
         let filter = { id: exam.id }
-        let update = { $set: { title, code, pass, time, cover, test } }
+        let update = { $set: { title, code, pass, time, image, cover, test } }
         let options = { new: true }
         try {
           await models.Exam.findOneAndUpdate(filter, update, options)

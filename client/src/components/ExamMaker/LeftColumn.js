@@ -48,6 +48,7 @@ function LeftColumn({
   code,
   pass,
   time,
+  image,
   onChange,
   setMode,
   saveExam,
@@ -80,7 +81,7 @@ function LeftColumn({
       <TextField
         variant="outlined"
         name="code"
-        label="Exam Code"
+        label="Code"
         value={code}
         onChange={onChange}
         tabIndex={2}
@@ -94,30 +95,49 @@ function LeftColumn({
           }
         }}
       />
+      <div className="row">
+        <TextField
+          variant="outlined"
+          name="pass"
+          label="Pass"
+          value={pass}
+          onChange={onChange}
+          tabIndex={3}
+          className="half-textfield"
+          InputLabelProps={{ shrink: true }}
+          InputProps={{
+            classes: {
+              root: classes.outlinedInput,
+              notchedOutline: classes.notchedOutline,
+              input: classes.input
+            }
+          }}
+        />
+        <TextField
+          variant="outlined"
+          name="time"
+          label="Time"
+          value={time}
+          onChange={onChange}
+          tabIndex={4}
+          className="half-textfield"
+          InputLabelProps={{ shrink: true }}
+          InputProps={{
+            classes: {
+              root: classes.outlinedInput,
+              notchedOutline: classes.notchedOutline,
+              input: classes.input
+            }
+          }}
+        />
+      </div>
       <TextField
         variant="outlined"
-        name="pass"
-        label="Passing Score"
-        value={pass}
+        name="image"
+        label="Image URL"
+        value={image}
         onChange={onChange}
-        tabIndex={3}
-        className="textfield"
-        InputLabelProps={{ shrink: true }}
-        InputProps={{
-          classes: {
-            root: classes.outlinedInput,
-            notchedOutline: classes.notchedOutline,
-            input: classes.input
-          }
-        }}
-      />
-      <TextField
-        variant="outlined"
-        name="time"
-        label="Time Limit"
-        value={time}
-        onChange={onChange}
-        tabIndex={4}
+        tabIndex={5}
         className="textfield"
         InputLabelProps={{ shrink: true }}
         InputProps={{

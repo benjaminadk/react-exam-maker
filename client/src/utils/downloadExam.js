@@ -1,11 +1,12 @@
 export default function(exam) {
-  const { author, title, code, pass, time, cover, test } = exam
+  const { author, title, code, pass, time, image, cover, test } = exam
   let examDL = {
     author,
     title,
     code,
     pass,
     time,
+    image,
     cover,
     test
   }

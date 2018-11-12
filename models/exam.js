@@ -9,6 +9,7 @@ const examSchema = new Schema({
   code: String,
   pass: Number,
   time: Number,
+  image: String,
   cover: [{ variant: Number, text: String }],
   test: [
     {
